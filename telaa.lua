@@ -1,141 +1,117 @@
-print(' KeyAuth Lua Example - https://github.com/mazk5145/')
+
+-- Dark Loader - KeyAuth UI
+
 local HttpService = game:GetService("HttpService")
 local StarterGui = game:GetService("StarterGui")
-local LuaName = "KeyAuth Lua Example"
+local LuaName = "Dark Loader"
 
---* Configuration *--
-local initialized = false
+--* Application Config *--
+local Name = "Isabelly.souza24" -- Seu app name no KeyAuth
+local Ownerid = "hRqYWvIdGG" -- Seu ownerID do KeyAuth
+local APPVersion = "1.0"
 local sessionid = ""
+local initialized = false
 
-
+-- Notificação Inicial
 StarterGui:SetCore("SendNotification", {
     Title = LuaName,
-    Text = " Intializing...",
+    Text = "Inicializando...",
     Duration = 5
 })
 
-
---* Application Details *--
-Name = "Isabelly.souza24" --* Application Name
-Ownerid = "hRqYWvIdGG" --* OwnerID
-APPVersion = "1.0"     --* Application Version
-
-local req = game:HttpGet('https://keyauth.win/api/1.1/?name=' .. Name .. '&ownerid=' .. Ownerid .. '&type=init&ver=' .. APPVersion)
-
-if req == "KeyAuth_Invalid" then 
-   print(" Error: Application not found.")
-
-   StarterGui:SetCore("SendNotification", {
-	   Title = LuaName,
-	   Text = " Error: Application not found.",
-	   Duration = 3
-   })
-
-   return false
+-- Requisição INIT
+local req = game:HttpGet("https://keyauth.win/api/1.1/?name="..Name.."&ownerid="..Ownerid.."&type=init&ver="..APPVersion)
+if req == "KeyAuth_Invalid" then
+    StarterGui:SetCore("SendNotification", {
+        Title = LuaName,
+        Text = "Erro: Aplicação não encontrada.",
+        Duration = 5
+    })
+    return
 end
 
 local data = HttpService:JSONDecode(req)
-
-if data.success == true then
-   initialized = true
-   sessionid = data.sessionid
-   --print(req)
-elseif (data.message == "invalidver") then
-   print(" Error: Wrong application version..")
-
-   StarterGui:SetCore("SendNotification", {
-	   Title = LuaName,
-	   Text = " Error: Wrong application version..",
-	   Duration = 3
-   })
-
-   return false
-else
-   print(" Error: " .. data.message)
-   return false
-end
-
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PDCloud/Pivl-CDN/main/keyauth/robloxUI.lua"))()
-local Window = Library.CreateLib("KeyAuth Lua Example [ROBLOX] - github.com/mazk5145")
-
--- Tabs --
-local Tab = Window:NewTab("Welcome")
-local WelcomeSection = Tab:NewSection("Welcome")
-
-local LoginTab = Window:NewTab("Login")
-local MainSection = LoginTab:NewSection("Login")
-
--- Configuration !! KEEP CLEAR !!--
-local Username = ""
-local Password = ""
-
-WelcomeSection.NewLabel("Application Details", "Number of users: " .. data.appinfo.numUsers .. "\nNumber of online users: " .. data.appinfo.numOnlineUsers .. "\n Number of keys: " .. data.appinfo.numKeys .. "\n Application Version: " .. data.appinfo.version)
-
--- Text Boxes and Login Button --
-MainSection:NewTextBox("Username", "Please provide Username.", function(state)
-    if state then
-        Username = state
-    end
-end)
-
-MainSection:NewTextBox("Password", "Please provide Password.", function(state)
-    if state then
-        Password = state
-    end
-end)
-
-MainSection:NewButton("Login to Application ?", "Please provide Password.", function(state)
-    if Username == "" then
-        StarterGui:SetCore("SendNotification", {
-            Title = LuaName,
-            Text = " Error: Username is empty.",
-            Duration = 3
-        })
-        return false
-    end
-    if Password == "" then
-        StarterGui:SetCore("SendNotification", {
-            Title = LuaName,
-            Text = " Error: Password is empty.",
-            Duration = 3
-        })
-        return false
-    end
-
-    Library.Destroy()
-
-    local req = game:HttpGet('https://keyauth.win/api/1.1/?name=' .. Name .. '&ownerid=' .. Ownerid .. '&type=login&username=' .. Username .. '&pass=' .. Password ..'&ver=' .. APPVersion .. '&sessionid=' .. sessionid)
-    local data = HttpService:JSONDecode(req)
-    
-    
-    if data.success == false then 
-        print(" Error: " .. data.message )
-    
-       StarterGui:SetCore("SendNotification", {
-           Title = LuaName,
-           Text = " Error: " .. data.message,
-           Duration = 5
-       })
-    
-        return false
-    end
-    
+if data.success == false then
     StarterGui:SetCore("SendNotification", {
         Title = LuaName,
-        Text = " Successfully Authorized :)",
+        Text = "Erro: " .. data.message,
         Duration = 5
     })
+    return
+end
 
-    -- Your Code --
+sessionid = data.sessionid
+initialized = true
 
-    -- Example Code --
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PDCloud/Pivl-CDN/main/keyauth/robloxUI.lua"))()
-    local Window = Library.CreateLib("KeyAuth Lua Example [ROBLOX] - github.com/mazk5145")
+-- UI Dark Simples
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "DarkLoaderUI"
+local Frame = Instance.new("Frame", ScreenGui)
+Frame.Size = UDim2.new(0, 400, 0, 250)
+Frame.Position = UDim2.new(0.5, -200, 0.5, -125)
+Frame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Frame.BorderSizePixel = 0
 
+local Title = Instance.new("TextLabel", Frame)
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.BackgroundTransparency = 1
+Title.Text = "Dark Loader - Login"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 20
 
-    local Tab = Window:NewTab("Dashboard")
-    local Dashboard = Tab:NewSection("Dashboard")
+local UsernameBox = Instance.new("TextBox", Frame)
+UsernameBox.PlaceholderText = "Usuário"
+UsernameBox.Position = UDim2.new(0.1, 0, 0.3, 0)
+UsernameBox.Size = UDim2.new(0.8, 0, 0, 30)
+UsernameBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+UsernameBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+UsernameBox.Text = ""
 
-    Dashboard.NewLabel("User Data", "Username: " .. data.info.username .. "\nIP Address: " .. data.info.ip .."\nCreated at: " .. data.info.createdate .. "\nLast login at:" .. data.info.lastlogin)
+local PasswordBox = Instance.new("TextBox", Frame)
+PasswordBox.PlaceholderText = "Senha"
+PasswordBox.Position = UDim2.new(0.1, 0, 0.5, 0)
+PasswordBox.Size = UDim2.new(0.8, 0, 0, 30)
+PasswordBox.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+PasswordBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+PasswordBox.Text = ""
+PasswordBox.ClearTextOnFocus = false
 
+local LoginButton = Instance.new("TextButton", Frame)
+LoginButton.Text = "Entrar"
+LoginButton.Position = UDim2.new(0.1, 0, 0.7, 0)
+LoginButton.Size = UDim2.new(0.8, 0, 0, 35)
+LoginButton.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+LoginButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+LoginButton.MouseButton1Click:Connect(function()
+    local user = UsernameBox.Text
+    local pass = PasswordBox.Text
+    if user == "" or pass == "" then
+        StarterGui:SetCore("SendNotification", {
+            Title = LuaName,
+            Text = "Preencha todos os campos!",
+            Duration = 4
+        })
+        return
+    end
+
+    local loginReq = game:HttpGet("https://keyauth.win/api/1.1/?name="..Name.."&ownerid="..Ownerid.."&type=login&username="..user.."&pass="..pass.."&ver="..APPVersion.."&sessionid="..sessionid)
+    local loginData = HttpService:JSONDecode(loginReq)
+
+    if loginData.success == true then
+        StarterGui:SetCore("SendNotification", {
+            Title = LuaName,
+            Text = "Login realizado com sucesso!",
+            Duration = 4
+        })
+        Frame:Destroy()
+        -- Código protegido pós login aqui
+    else
+        StarterGui:SetCore("SendNotification", {
+            Title = LuaName,
+            Text = "Erro: " .. loginData.message,
+            Duration = 4
+        })
+    end
 end)
