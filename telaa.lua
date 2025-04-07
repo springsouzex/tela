@@ -6,10 +6,10 @@ local StarterGui = game:GetService("StarterGui")
 local LuaName = "Dark Loader"
 
 --* Application Config *--
-local Name = "Isabelly.souza24" -- Seu app name no KeyAuth
-local Ownerid = "hRqYWvIdGG" -- Seu ownerID do KeyAuth
-local APPVersion = "1.0"
-local sessionid = ""
+local Name = "Isabelly.souza24's Application"; -- Seu app name no KeyAuth
+local Ownerid = "hRqYWvIdGG"; -- Seu ownerID do KeyAuth
+local APPVersion = "1.0";
+local sessionid = "";
 local initialized = false
 
 -- Notificação Inicial
