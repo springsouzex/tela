@@ -16,8 +16,8 @@ StarterGui:SetCore("SendNotification", {
 
 
 --* Application Details *--
-Name = "" --* Application Name
-Ownerid = "" --* OwnerID
+Name = "Isabelly.souza24" --* Application Name
+Ownerid = "hRqYWvIdGG" --* OwnerID
 APPVersion = "1.0"     --* Application Version
 
 local req = game:HttpGet('https://keyauth.win/api/1.1/?name=' .. Name .. '&ownerid=' .. Ownerid .. '&type=init&ver=' .. APPVersion)
@@ -55,7 +55,7 @@ else
    return false
 end
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PDCloud/Pivl-CDN/main/keyauth/robloxUI.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/springsouzex/luasouza/refs/heads/main/message.lua"))()
 local Window = Library.CreateLib("KeyAuth Lua Example [ROBLOX] - github.com/mazk5145")
 
 -- Tabs --
