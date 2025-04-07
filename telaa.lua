@@ -55,7 +55,7 @@ else
    return false
 end
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/springsouzex/luasouza/refs/heads/main/message.lua"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PDCloud/Pivl-CDN/main/keyauth/robloxUI.lua"))()
 local Window = Library.CreateLib("KeyAuth Lua Example [ROBLOX] - github.com/mazk5145")
 
 -- Tabs --
@@ -129,7 +129,7 @@ MainSection:NewButton("Login to Application ?", "Please provide Password.", func
     -- Your Code --
 
     -- Example Code --
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/springsouzex/luasouza/refs/heads/main/message.lua"))()
+    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/PDCloud/Pivl-CDN/main/keyauth/robloxUI.lua"))()
     local Window = Library.CreateLib("KeyAuth Lua Example [ROBLOX] - github.com/mazk5145")
 
 
