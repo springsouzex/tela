@@ -20,7 +20,7 @@ StarterGui:SetCore("SendNotification", {
 })
 
 -- Requisição INIT
-local req = game:HttpGet("https://keyauth.win/api/1.1/?name="..Name.."&ownerid="..Ownerid.."&type=init&ver="..APPVersion)
+local req = game:HttpGet("https://keyauth.win/api/1.3/?name="..Name.."&ownerid="..Ownerid.."&type=init&ver="..APPVersion)
 if req == "KeyAuth_Invalid" then
     StarterGui:SetCore("SendNotification", {
         Title = LuaName,
@@ -96,7 +96,7 @@ LoginButton.MouseButton1Click:Connect(function()
         return
     end
 
-    local loginReq = game:HttpGet("https://keyauth.win/api/1.1/?name="..Name.."&ownerid="..Ownerid.."&type=login&username="..user.."&pass="..pass.."&ver="..APPVersion.."&sessionid="..sessionid)
+    local loginReq = game:HttpGet("https://keyauth.win/api/1.3/?name="..Name.."&ownerid="..Ownerid.."&type=login&username="..user.."&pass="..pass.."&ver="..APPVersion.."&sessionid="..sessionid)
     local loginData = HttpService:JSONDecode(loginReq)
 
     if loginData.success == true then
